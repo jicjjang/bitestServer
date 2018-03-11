@@ -21,9 +21,9 @@
   "author": "jicjjang <jicjjang12@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jicjjang/bitestServer/issues"
+    "url": "https://github.com/jicjjang/bitest_server/issues"
   },
-  "homepage": "https://github.com/jicjjang/bitestServer#readme",
+  "homepage": "https://github.com/jicjjang/bitest_server#readme",
   "dependencies": {
     "ejs": "^2.5.7",
     "express": "^4.16.2",
