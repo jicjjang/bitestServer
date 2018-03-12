@@ -4,7 +4,7 @@
   "description": "bitest server",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register",
+    "test": "jest",
     "build": "rm -rf ./build && babel src --out-dir build",
     "start": "npm run build && node ./build/index.js",
     "dev": "babel-node ./src/index.js"
@@ -35,6 +35,7 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
+    "jest": "^22.4.2",
     "webpack": "^4.1.1"
   }
 }
