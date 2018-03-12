@@ -3,8 +3,8 @@ const app = express()
 let port = 3000
 
 /**
- * @Title DB
- * @Description 거래내역 저장용.
+ * @DB
+ * @Description 거래내역 저장으로 확장 가능
  */
 // import mongoose from 'mongoose'
 // import DB_URL from './config'
@@ -17,19 +17,18 @@ let port = 3000
 // db.once('open', console.log.bind(console, "Connected to mongod server"))
 
 /**
- * @Title Route
- * @Description static 파일 또는 일반 경로, 에러처리
- *              (소켓만 사용하면 거의 사용 용도가 없음.)
+ * @Route
+ * @Description static 파일 또는 일반 경로, 에러처리 (소켓만 사용하면 거의 사용 용도가 없음.)
  */
-import routes from './routes'
-app.use('/static', express.static(__dirname + '/../public'))
-app.use('/', routes)
-app.use((err, req, res, next) => {
-  res.status(err.status || 500).send({
-    code: err.status || 500,
-    message: err.message || 'Server error'
-  })
-})
+// import routes from './routes'
+// app.use('/static', express.static(__dirname + '/../public'))
+// app.use('/', routes)
+// app.use((err, req, res, next) => {
+//   res.status(err.status || 500).send({
+//     code: err.status || 500,
+//     message: err.message || 'Server error'
+//   })
+// })
 
 /**
  * @Server
@@ -42,16 +41,10 @@ const server = app.listen(port, () => {
 /**
  * @Socket
  * @Description 소켓
+ * @params server
+ * @params initialBuyList : 임의의 초기 데이터
+ * @params initialSellList : 임의의 초기 데이터
  */
-const io = require('socket.io')(server)
-io.on('connection', socket => {
-  console.log(`${socket.id} connected`)
 
-  socket.on('test socket', data => {
-    io.emit('test socket', data)
-  })
-
-  socket.on('disconnect', () => {
-    console.log(`${socket.id} disconnected`)
-  })
-})
+import { initialBuyList, initialSellList } from './initTradeList'
+require('./io')(server, initialBuyList, initialSellList)
