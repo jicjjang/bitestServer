@@ -87,7 +87,7 @@ export function tradeProcessor(insert, buyList, sellList) {
           } else {
             // 1-3. 매수량 < 매도량
             buyList.splice(i--, 1)
-            count = Math.round((sellTotalPrice - buyTotalPrice) / price)
+            count -= intBuyCount
           }
         } else {
           // case 2. 매수가 < 파는 가장 작은 값
