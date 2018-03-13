@@ -38,7 +38,7 @@ const devFile = fs.readFileSync(__dirname + '/devTradeInsert.txt', 'utf8')
  *     18. 매수량 < 매도량
  */
 
-// 1. 테스트 거래 데이터와 초기 데이터
+// 1. 초기 데이터와 테스트 거래 데이터
 test('1. traderProcessor with initial data and test trade data', () => {
   let targetTradeList = {
       buyList: [
@@ -115,7 +115,7 @@ test('1. traderProcessor with initial data and test trade data', () => {
   }
 })
 
-// 2. 테스트 거래 데이터와 비어있는 초기 데이터
+// 2. 비어있는 초기 데이터와 테스트 거래 데이터
 test('2. traderProcessor without initial data and test trade data', () => {
   let targetTradeList = {
       buyList: [],
@@ -173,7 +173,7 @@ test('2. traderProcessor without initial data and test trade data', () => {
   }
 })
 
-// 3. 개발용 거래 데이터와 초기 데이터
+// 3. 초기 데이터와 개발용 거래 데이터
 test('3. traderProcessor with initial data and dev trade data', () => {
   let targetTradeList = {
     buyList: [
@@ -280,7 +280,7 @@ test('3. traderProcessor with initial data and dev trade data', () => {
   }
 })
 
-// 4. 개발용 거래 데이터와 비어있는 초기 데이터
+// 4. 비어있는 초기 데이터와 개발용 거래 데이터
 test('4. traderProcessor without initial data and dev trade data', () => {
   let targetTradeList = {
     buyList: [],
