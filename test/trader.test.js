@@ -64,36 +64,82 @@ test('1. traderProcessor with initial data and test trade data', () => {
     testTradeList = JSON.parse(JSON.stringify(targetTradeList))
 
   const appendTradeValues = [
-    { func: () => { testTradeList['sellList'].shift() } },
+    { func: () => {
+      testTradeList['sellList'].shift()
+      testTradeList['currentPrice'] = 541
+    } },
     { func: () => {
       testTradeList['sellList'].shift()
       testTradeList['buyList'].splice(0, 0, { count: 20, price: 542 })
+      testTradeList['currentPrice'] = 542
     } },
-    { func: () => { testTradeList['sellList'][0].count -= 30 } },
-    { func: () => { testTradeList['sellList'].shift() } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 30
+      testTradeList['currentPrice'] = 544
+    } },
+    { func: () => {
+      testTradeList['sellList'].shift()
+      testTradeList['currentPrice'] = 680
+    } },
     { func: () => {
       testTradeList['sellList'].shift()
       testTradeList['buyList'].splice(0, 0, { count: 10, price: 546 })
+      testTradeList['currentPrice'] = 545
     } },
-    { func: () => { testTradeList['sellList'][0].count -= 20 } },
-    { func: () => { testTradeList['buyList'].push({ count: 200, price: 275 }) } },
-    { func: () => { testTradeList['buyList'].splice(1, 0, { count: 60, price: 545 }) } },
-    { func: () => { testTradeList['buyList'].splice(2, 0, { count: 120, price: 544 }) } },
-    { func: () => { testTradeList['buyList'].shift() } },
-    { func: () => { testTradeList['buyList'][0].count -= 20 } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 20
+      testTradeList['currentPrice'] = 550
+    } },
+    { func: () => {
+      testTradeList['buyList'].push({ count: 200, price: 275 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(1, 0, { count: 60, price: 545 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(2, 0, { count: 120, price: 544 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].shift()
+      testTradeList['currentPrice'] = 546
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count -= 20
+      testTradeList['currentPrice'] = 545
+    } },
     { func: () => {
       testTradeList['buyList'].shift()
       testTradeList['sellList'].splice(0, 0, { count: 20, price: 545 })
+      testTradeList['currentPrice'] = 545
     } },
-    { func: () => { testTradeList['buyList'].shift() } },
-    { func: () => { testTradeList['buyList'][0].count -= 10 } },
+    { func: () => {
+      testTradeList['buyList'].shift()
+      testTradeList['currentPrice'] = 542
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count -= 10
+      testTradeList['currentPrice'] = 542
+    } },
     { func: () => {
       testTradeList['buyList'].shift()
       testTradeList['buyList'][0].count -= 10
+      testTradeList['currentPrice'] = 540
     } },
-    { func: () => { testTradeList['sellList'].splice(0, 0, { count: 90, price: 544 }) } },
-    { func: () => { testTradeList['sellList'].push({ count: 20, price: 555 }) } },
-    { func: () => { testTradeList['sellList'].splice(6, 0, { count: 200, price: 554 }) } },
+    { func: () => {
+      testTradeList['sellList'].splice(0, 0, { count: 90, price: 544 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'].push({ count: 20, price: 555 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'].splice(6, 0, { count: 200, price: 554 })
+      testTradeList['currentPrice'] = 0
+    } },
   ]
 
   const splitedFile = testFile.split('\n')
@@ -110,7 +156,7 @@ test('1. traderProcessor with initial data and test trade data', () => {
       type: type,
       price: price,
       count: count
-    }, targetTradeList.buyList, targetTradeList.sellList))
+    }, targetTradeList.buyList, targetTradeList.sellList, false))
       .toEqual(testTradeList);
   }
 })
@@ -124,35 +170,82 @@ test('2. traderProcessor without initial data and test trade data', () => {
     testTradeList = JSON.parse(JSON.stringify(targetTradeList))
 
   const appendTradeValues = [
-    { func: () => { testTradeList['buyList'].splice(0, 0, { count: 100, price: 541 }) } },
-    { func: () => { testTradeList['buyList'].splice(0, 0, { count: 120, price: 542 }) } },
-    { func: () => { testTradeList['buyList'].splice(0, 0, { count: 30, price: 544 }) } },
-    { func: () => { testTradeList['buyList'].splice(0, 0, { count: 16, price: 680 }) } },
-    { func: () => { testTradeList['buyList'].splice(1, 0, { count: 110, price: 546 }) } },
-    { func: () => { testTradeList['buyList'].splice(1, 0, { count: 20, price: 551 }) } },
-    { func: () => { testTradeList['buyList'].push({ count: 200, price: 275 }) } },
-    { func: () => { testTradeList['buyList'].splice(3, 0, { count: 60, price: 545 }) } },
-    { func: () => { testTradeList['buyList'][4].count += 120 } },
-
-    { func: () => { testTradeList['buyList'][0].count -= 10 } },
+    { func: () => {
+      testTradeList['buyList'].splice(0, 0, { count: 100, price: 541 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(0, 0, { count: 120, price: 542 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(0, 0, { count: 30, price: 544 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(0, 0, { count: 16, price: 680 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(1, 0, { count: 110, price: 546 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(1, 0, { count: 20, price: 551 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].push({ count: 200, price: 275 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(3, 0, { count: 60, price: 545 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][4].count += 120
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count -= 10
+      testTradeList['currentPrice'] = 680
+    } },
     { func: () => {
       testTradeList['buyList'].shift()
       testTradeList['buyList'][0].count -= 14
+      testTradeList['currentPrice'] = 551
     } },
     { func: () => {
       testTradeList['buyList'].shift()
       testTradeList['buyList'][0].count -= 54
+      testTradeList['currentPrice'] = 546
     } },
     { func: () => {
       testTradeList['buyList'].shift()
       testTradeList['buyList'].shift()
       testTradeList['buyList'][0].count -= 4
+      testTradeList['currentPrice'] = 544
     } },
-    { func: () => { testTradeList['buyList'][0].count -= 10 } },
-    { func: () => { testTradeList['buyList'][0].count -= 20 } },
-    { func: () => { testTradeList['buyList'][0].count -= 90 } },
-    { func: () => { testTradeList['sellList'].splice(0, 0, { count: 20, price: 555 }) } },
-    { func: () => { testTradeList['sellList'].splice(0, 0, { count: 200, price: 554 }) } },
+    { func: () => {
+      testTradeList['buyList'][0].count -= 10
+      testTradeList['currentPrice'] = 544
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count -= 20
+      testTradeList['currentPrice'] = 544
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count -= 90
+      testTradeList['currentPrice'] = 544
+    } },
+    { func: () => {
+      testTradeList['sellList'].splice(0, 0, { count: 20, price: 555 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'].splice(0, 0, { count: 200, price: 554 })
+      testTradeList['currentPrice'] = 0
+    } },
   ]
   const splitedFile = testFile.split('\n')
 
@@ -168,12 +261,12 @@ test('2. traderProcessor without initial data and test trade data', () => {
       type: type,
       price: price,
       count: count
-    }, targetTradeList.buyList, targetTradeList.sellList))
+    }, targetTradeList.buyList, targetTradeList.sellList, false))
       .toEqual(testTradeList);
   }
 })
 
-// 3. 초기 데이터와 개발용 거래 데이터
+// // 3. 초기 데이터와 개발용 거래 데이터
 test('3. traderProcessor with initial data and dev trade data', () => {
   let targetTradeList = {
     buyList: [
@@ -199,66 +292,235 @@ test('3. traderProcessor with initial data and dev trade data', () => {
   testTradeList = JSON.parse(JSON.stringify(targetTradeList))
 
   const appendTradeValues = [
-    { func: () => { testTradeList['sellList'][4].count += 100 } },
-    { func: () => { testTradeList['buyList'][0].count += 100 } },
-    { func: () => { testTradeList['sellList'].splice(4, 0, { count: 40, price: 549 }) } },
-    { func: () => { testTradeList['sellList'].shift() } },
-    { func: () => { testTradeList['sellList'].splice(3, 0, { count: 50, price: 548 }) } },
-    { func: () => { testTradeList['sellList'].shift() } },
-    { func: () => { testTradeList['sellList'].splice(2, 0, { count: 100, price: 547 }) } },
-    { func: () => { testTradeList['buyList'].splice(0, 0, { count: 50, price: 543 }) } },
-    { func: () => { testTradeList['sellList'].splice(2, 0, { count: 100, price: 546 }) } },
     { func: () => {
-        testTradeList['sellList'].shift()
-        testTradeList['buyList'].splice(0, 0, { count: 50, price: 544 })
-      }},
-    { func: () => { testTradeList['sellList'][0].count += 60 } },
-    { func: () => { testTradeList['sellList'][0].count -= 50 } },
-    { func: () => { testTradeList['sellList'][0].count += 50 } },
-    { func: () => { testTradeList['sellList'][0].count -= 100 } },
-    { func: () => { testTradeList['sellList'][0].count -= 20 } },
-    { func: () => { testTradeList['buyList'].shift() } },
-    { func: () => { testTradeList['sellList'][0].count -= 10 } },
-    { func: () => { testTradeList['sellList'][0].count += 100 } },
-    { func: () => { testTradeList['sellList'][1].count += 100 } },
-    { func: () => { testTradeList['sellList'][2].count += 100 } },
-    { func: () => { testTradeList['sellList'][5].count += 100 } },
-    { func: () => { testTradeList['buyList'][1].count += 100 } },
-    { func: () => { testTradeList['sellList'][4].count += 40 } },
-    { func: () => { testTradeList['buyList'].splice(1, 0, { count: 100, price: 541 }) } },
-    { func: () => { testTradeList['sellList'][3].count += 50 } },
-    { func: () => { testTradeList['buyList'].splice(1, 0, { count: 100, price: 542 }) } },
-    { func: () => { testTradeList['sellList'][2].count += 100 } },
-    { func: () => { testTradeList['buyList'][0].count += 50 } },
-    { func: () => { testTradeList['sellList'][1].count += 100 } },
-    { func: () => { testTradeList['buyList'].splice(0, 0, { count: 100, price: 544 }) } },
-    { func: () => { testTradeList['sellList'][0].count += 60 } },
-    { func: () => { testTradeList['sellList'][0].count -= 50 } },
-    { func: () => { testTradeList['sellList'][0].count += 50 } },
-    { func: () => { testTradeList['sellList'][0].count -= 100 } },
-    { func: () => { testTradeList['sellList'][0].count -= 20 } },
-    { func: () => { testTradeList['sellList'][0].count -= 10 } },
-    { func: () => { testTradeList['buyList'][0].count -= 50 } },
-    { func: () => { testTradeList['sellList'][0].count += 100 } },
-    { func: () => { testTradeList['sellList'][1].count += 100 } },
-    { func: () => { testTradeList['sellList'][2].count += 100 } },
-    { func: () => { testTradeList['sellList'][5].count += 100 } },
-    { func: () => { testTradeList['buyList'][4].count += 100 } },
-    { func: () => { testTradeList['sellList'][4].count += 40 } },
-    { func: () => { testTradeList['buyList'][3].count += 100 } },
-    { func: () => { testTradeList['sellList'][3].count += 50 } },
-    { func: () => { testTradeList['buyList'][2].count += 100 } },
-    { func: () => { testTradeList['sellList'][2].count += 100 } },
-    { func: () => { testTradeList['buyList'][1].count += 50 } },
-    { func: () => { testTradeList['sellList'][1].count += 100 } },
-    { func: () => { testTradeList['buyList'][0].count += 100 } },
-    { func: () => { testTradeList['sellList'][0].count += 60 } },
-    { func: () => { testTradeList['sellList'][0].count -= 50 } },
-    { func: () => { testTradeList['sellList'][0].count += 50 } },
-    { func: () => { testTradeList['sellList'][0].count -= 100 } },
-    { func: () => { testTradeList['sellList'][0].count -= 20 } },
-    { func: () => { testTradeList['sellList'][0].count -= 10 } },
-    { func: () => { testTradeList['buyList'][0].count -= 50 } }
+      testTradeList['sellList'][4].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'].splice(4, 0, { count: 40, price: 549 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'].shift()
+      testTradeList['currentPrice'] = 541
+    } },
+    { func: () => {
+      testTradeList['sellList'].splice(3, 0, { count: 50, price: 548 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'].shift()
+      testTradeList['currentPrice'] = 542
+    } },
+    { func: () => {
+      testTradeList['sellList'].splice(2, 0, { count: 100, price: 547 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(0, 0, { count: 50, price: 543 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'].splice(2, 0, { count: 100, price: 546 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'].shift()
+      testTradeList['buyList'].splice(0, 0, { count: 50, price: 544 })
+      testTradeList['currentPrice'] = 544
+    }},
+    { func: () => {
+      testTradeList['sellList'][0].count += 60
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 50
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 100
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 20
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['buyList'].shift()
+      testTradeList['currentPrice'] = 540
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 10
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][1].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][2].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][5].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][1].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][4].count += 40
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(1, 0, { count: 100, price: 541 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][3].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(1, 0, { count: 100, price: 542 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][2].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][1].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(0, 0, { count: 100, price: 544 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count += 60
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 50
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 100
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 20
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 10
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count -= 50
+      testTradeList['currentPrice'] = 544
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][1].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][2].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][5].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][4].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][4].count += 40
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][3].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][3].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][2].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][2].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][1].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][1].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count += 60
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 50
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 100
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 20
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 10
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count -= 50
+      testTradeList['currentPrice'] = 544
+    } }
   ]
 
   const splitedFile = devFile.split('\n')
@@ -275,12 +537,12 @@ test('3. traderProcessor with initial data and dev trade data', () => {
       type: type,
       price: price,
       count: count
-    }, targetTradeList.buyList, targetTradeList.sellList))
+    }, targetTradeList.buyList, targetTradeList.sellList, false))
       .toEqual(testTradeList);
   }
 })
 
-// 4. 비어있는 초기 데이터와 개발용 거래 데이터
+// // 4. 비어있는 초기 데이터와 개발용 거래 데이터
 test('4. traderProcessor without initial data and dev trade data', () => {
   let targetTradeList = {
     buyList: [],
@@ -289,69 +551,236 @@ test('4. traderProcessor without initial data and dev trade data', () => {
   testTradeList = JSON.parse(JSON.stringify(targetTradeList))
 
   const appendTradeValues = [
-    { func: () => { testTradeList['sellList'].splice(0, 0, { count: 100, price: 550 }) } },
-    { func: () => { testTradeList['buyList'].splice(0, 0, { count: 100, price: 540 }) } },
-    { func: () => { testTradeList['sellList'].splice(0, 0, { count: 40, price: 549 }) } },
-    { func: () => { testTradeList['buyList'].splice(0, 0, { count: 100, price: 541 }) } },
-    { func: () => { testTradeList['sellList'].splice(0, 0, { count: 50, price: 548 }) } },
-    { func: () => { testTradeList['buyList'].splice(0, 0, { count: 100, price: 542 }) } },
-    { func: () => { testTradeList['sellList'].splice(0, 0, { count: 100, price: 547 }) } },
-    { func: () => { testTradeList['buyList'].splice(0, 0, { count: 50, price: 543 }) } },
-    { func: () => { testTradeList['sellList'].splice(0, 0, { count: 100, price: 546 }) } },
-    { func: () => { testTradeList['buyList'].splice(0, 0, { count: 100, price: 544 }) } },
-    { func: () => { testTradeList['sellList'].splice(0, 0, { count: 60, price: 545 }) } },
-    { func: () => { testTradeList['sellList'][0].count -= 50 } },
-    { func: () => { testTradeList['sellList'][0].count += 50 } },
+    { func: () => {
+      testTradeList['sellList'].splice(0, 0, { count: 100, price: 550 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(0, 0, { count: 100, price: 540 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'].splice(0, 0, { count: 40, price: 549 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(0, 0, { count: 100, price: 541 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'].splice(0, 0, { count: 50, price: 548 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(0, 0, { count: 100, price: 542 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'].splice(0, 0, { count: 100, price: 547 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(0, 0, { count: 50, price: 543 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'].splice(0, 0, { count: 100, price: 546 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'].splice(0, 0, { count: 100, price: 544 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'].splice(0, 0, { count: 60, price: 545 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 50
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
     { func: () => {
       testTradeList['sellList'].shift()
-        testTradeList['buyList'].splice(0, 0, { count: 40, price: 545 })
+      testTradeList['buyList'].splice(0, 0, { count: 40, price: 545 })
+      testTradeList['currentPrice'] = 545
     }},
-    { func: () => { testTradeList['sellList'][0].count -= 20 } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 20
+      testTradeList['currentPrice'] = 546
+    } },
     { func: () => {
       testTradeList['buyList'].shift()
       testTradeList['buyList'][0].count -= 10
+      testTradeList['currentPrice'] = 544
     } },
-    { func: () => { testTradeList['sellList'][0].count -= 10 } },
-    { func: () => { testTradeList['sellList'].splice(0, 0, { count: 100, price: 545 }) } },
-    { func: () => { testTradeList['sellList'][1].count += 100 } },
-    { func: () => { testTradeList['sellList'][2].count += 100 } },
-    { func: () => { testTradeList['sellList'][5].count += 100 } },
-    { func: () => { testTradeList['buyList'][4].count += 100 } },
-    { func: () => { testTradeList['sellList'][4].count += 40 } },
-    { func: () => { testTradeList['buyList'][3].count += 100 } },
-    { func: () => { testTradeList['sellList'][3].count += 50 } },
-    { func: () => { testTradeList['buyList'][2].count += 100 } },
-    { func: () => { testTradeList['sellList'][2].count += 100 } },
-    { func: () => { testTradeList['buyList'][1].count += 50 } },
-    { func: () => { testTradeList['sellList'][1].count += 100 } },
-    { func: () => { testTradeList['buyList'][0].count += 100 } },
-    { func: () => { testTradeList['sellList'][0].count += 60 } },
-    { func: () => { testTradeList['sellList'][0].count -= 50 } },
-    { func: () => { testTradeList['sellList'][0].count += 50 } },
-    { func: () => { testTradeList['sellList'][0].count -= 100 } },
-    { func: () => { testTradeList['sellList'][0].count -= 20 } },
-    { func: () => { testTradeList['sellList'][0].count -= 10 } },
-    { func: () => { testTradeList['buyList'][0].count -= 50 } },
-    { func: () => { testTradeList['sellList'][0].count += 100 } },
-    { func: () => { testTradeList['sellList'][1].count += 100 } },
-    { func: () => { testTradeList['sellList'][2].count += 100 } },
-    { func: () => { testTradeList['sellList'][5].count += 100 } },
-    { func: () => { testTradeList['buyList'][4].count += 100 } },
-    { func: () => { testTradeList['sellList'][4].count += 40 } },
-    { func: () => { testTradeList['buyList'][3].count += 100 } },
-    { func: () => { testTradeList['sellList'][3].count += 50 } },
-    { func: () => { testTradeList['buyList'][2].count += 100 } },
-    { func: () => { testTradeList['sellList'][2].count += 100 } },
-    { func: () => { testTradeList['buyList'][1].count += 50 } },
-    { func: () => { testTradeList['sellList'][1].count += 100 } },
-    { func: () => { testTradeList['buyList'][0].count += 100 } },
-    { func: () => { testTradeList['sellList'][0].count += 60 } },
-    { func: () => { testTradeList['sellList'][0].count -= 50 } },
-    { func: () => { testTradeList['sellList'][0].count += 50 } },
-    { func: () => { testTradeList['sellList'][0].count -= 100 } },
-    { func: () => { testTradeList['sellList'][0].count -= 20 } },
-    { func: () => { testTradeList['sellList'][0].count -= 10 } },
-    { func: () => { testTradeList['buyList'][0].count -= 50 } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 10
+      testTradeList['currentPrice'] = 546
+    } },
+    { func: () => {
+      testTradeList['sellList'].splice(0, 0, { count: 100, price: 545 })
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][1].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][2].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][5].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][4].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][4].count += 40
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][3].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][3].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][2].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][2].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][1].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][1].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count += 60
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 50
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 100
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 20
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 10
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count -= 50
+      testTradeList['currentPrice'] = 544
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][1].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][2].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][5].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][4].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][4].count += 40
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][3].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][3].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][2].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][2].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][1].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][1].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count += 100
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count += 60
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 50
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count += 50
+      testTradeList['currentPrice'] = 0
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 100
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 20
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['sellList'][0].count -= 10
+      testTradeList['currentPrice'] = 545
+    } },
+    { func: () => {
+      testTradeList['buyList'][0].count -= 50
+      testTradeList['currentPrice'] = 544
+    } },
   ]
   const splitedFile = devFile.split('\n')
 
@@ -367,7 +796,7 @@ test('4. traderProcessor without initial data and dev trade data', () => {
       type: type,
       price: price,
       count: count
-    }, targetTradeList.buyList, targetTradeList.sellList))
+    }, targetTradeList.buyList, targetTradeList.sellList, false))
       .toEqual(testTradeList);
   }
 })
