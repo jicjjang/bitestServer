@@ -1,18 +1,22 @@
 export function tradeResultEmitter(io, file, buyList, sellList) {
   if (file) {
-    const splitedFile = file.split('\t'),
-      type = splitedFile[0],
-      price = splitedFile[1],
-      count = splitedFile[2]
-    tradeProcessor({ type, price, count }, buyList, sellList)
-    io.emit('file parser', { type, price, count, buyList, sellList })
+    const splitedFile = file.split('\t')
+    let tradeData = {
+      type: splitedFile[0],
+      price: splitedFile[1],
+      count: splitedFile[2],
+      currentPrice: 0
+    }
+
+    tradeProcessor(tradeData, buyList, sellList)
+    io.emit('file parser', { tradeData, buyList, sellList })
   }
 }
 
-export function tradeProcessor(insert, buyList, sellList) {
-  const type = insert.type,
-    price = parseInt(insert.price)
-  let count = parseInt(insert.count)
+export function tradeProcessor(tradeData, buyList, sellList) {
+  const type = tradeData.type,
+    price = parseInt(tradeData.price)
+  let count = parseInt(tradeData.count)
 
   if (type.toLocaleUpperCase() === 'B') {
     let buyTotalPrice = price * count  // 살 수 있는 전체 가격
@@ -34,18 +38,21 @@ export function tradeProcessor(insert, buyList, sellList) {
             // 매수량 0, 매도량 0, 거래 종료
             sellList.splice(i--, 1)
             count = 0
+            tradeData.currentPrice = price  // 매수량, 매도량이 이 딱 맞아서 거래 후 둘다 없어짐. 현재가는 price
             break
           } else if (sellTotalPrice > buyTotalPrice) {
             // 1-2. 매수가 * 매수량 > 매도가 * 매도량
             // 매수량 0, 거래 종료
             sellList[i].count = Math.round((sellTotalPrice - buyTotalPrice) / intSellPrice)
             count = 0
+            tradeData.currentPrice = intSellPrice  // 매도량이 더 많아서 매수값이 없어짐. 현재가는 intSellPrice
             break
           } else {
             // 1-3. 매수가 * 매수량 < 매도가 * 매도량
             // 매도량 0, 거래 계속
             sellList.splice(i--, 1)
             count = Math.round((buyTotalPrice - sellTotalPrice) / price)
+            tradeData.currentPrice = intBuyPrice  // 매수량이 더 많아서 매도값이 없어짐. 현재가는 intBuyPrice
           }
         } else {
           // case 2. 매도가 > 매수가
@@ -78,16 +85,19 @@ export function tradeProcessor(insert, buyList, sellList) {
             // 돈이 추가된 price * count 방식으로 할 필요가 없음.
             buyList.splice(i--, 1)
             count = 0
+            tradeData.currentPrice = price  // 매수량, 매도량이 이 딱 맞아서 거래 후 둘다 없어짐. 현재가는 0
             break // 종료
           } else if (intBuyCount > count) {
             // 1-2. 매수량 > 매도량
             buyList[i].count -= count
             count = 0
+            tradeData.currentPrice = intBuyPrice  // 매수량이 더 많아서 매도값이 없어짐. 현재가는 intBuyPrice
             break // 종료
           } else {
             // 1-3. 매수량 < 매도량
             buyList.splice(i--, 1)
             count -= intBuyCount
+            tradeData.currentPrice = intBuyPrice  // 매도량이 더 많아서 매수값이 없어짐. 현재가는 intBuyPrice
           }
         } else {
           // case 2. 매수가 < 파는 가장 작은 값
