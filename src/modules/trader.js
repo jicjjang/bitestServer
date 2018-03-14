@@ -1,4 +1,4 @@
-export function tradeResultEmitter(io, file, buyList, sellList) {
+export function tradeResultEmitter(io, file, remainTradeCount, buyList, sellList) {
   if (file) {
     const splitedFile = file.split('\t'),
       type = splitedFile[0] || 'B',
@@ -6,7 +6,7 @@ export function tradeResultEmitter(io, file, buyList, sellList) {
       count = splitedFile[2] || 0
 
     const currentPrice = tradeProcessor({ type, price, count }, buyList, sellList)
-    io.emit('file parser', { type, price, count, currentPrice, buyList, sellList })
+    io.emit('file parser', { type, price, count, currentPrice, remainTradeCount, buyList, sellList })
   }
 }
 

@@ -55,7 +55,7 @@ function tempFileWatcher (io) {
   if (!data) {
     return
   }
-  tradeResultEmitter(io, data, buyList, sellList)
+  tradeResultEmitter(io, data, tempFileSaveArea.length || 0, buyList, sellList)
 
   const fileDataSender = setInterval(() => {
     const data = tempFileSaveArea.shift()
@@ -63,6 +63,6 @@ function tempFileWatcher (io) {
       clearInterval(fileDataSender)
       return
     }
-    tradeResultEmitter(io, data, buyList, sellList)
+    tradeResultEmitter(io, data, tempFileSaveArea.length || 0, buyList, sellList)
   }, 1000)
 }
