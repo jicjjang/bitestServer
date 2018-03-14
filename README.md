@@ -33,11 +33,33 @@
   - WebSocket
     - http와는 다르게 websocket은 websocket의 프로토콜로 따로 돌아간다. 클라이언트에서 disconnection 제어가 가능하며 소켓으로 자유로운 통신이 가능하다.
 
+## Usage
+
+~~~shell
+# install dependencies
+$ npm i
+
+# serve at localhost:3000
+$ npm run dev
+~~~
+
+## Build, Production
+
+~~~shell
+# build for production with minification
+$ npm run build
+
+or
+
+$ npm run start     #include build
+~~~
+
 ## Test case & Resolve strategy
 
 ### test usage
 
 ~~~shell
+# run all tests
 $ npm run test
 ~~~
 
@@ -109,19 +131,3 @@ SELL
 
 위 여부들에 대해 비교하며 값을 넣어야 함. B리스트와 S리스트를 동시에 비교해야하는 경우는 없기 때문에
 최악의 경우 빅오값은 `O(N)`이 나온다.
-
-## Usage
-
-~~~shell
-$ npm run dev
-~~~
-
-## Build, Production
-
-~~~shell
-$ npm run build
-
-or
-
-$ npm run start     #include build
-~~~
