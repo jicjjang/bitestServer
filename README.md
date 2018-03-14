@@ -23,7 +23,7 @@
 ## Configuration
 
 - Node + Express
-- [Front Repository](https://github.com/jicjjang/bitestFront)
+- [Front Repository](https://github.com/jicjjang/bitest_front)
 - Server Logic = ~~LongPolling~~, ~~Rest~~, **Websocket**
   - LongPolling
     - 서버와 클라이언트의 통신 이후에 특정 시간을 정해놓고 시간내에 다시 request가 발생하면 reconnection 없이 다시 데이터 교환이 가능.
