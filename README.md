@@ -36,6 +36,9 @@
 ## Usage
 
 ~~~shell
+# github repository clone
+$ git clone https://github.com/jicjjang/bitest_server
+
 # install dependencies
 $ npm i
 
