@@ -107,7 +107,6 @@ export function tradeProcessor(tradeData, buyList, sellList, isProduction=true) 
     }
   }
 
-
   return isProduction ? currentPrice : { buyList, sellList, currentPrice }
 }
 
